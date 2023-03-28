@@ -36,7 +36,7 @@ Generate various noises to use in masks or blending.
 ### Flatten Colors
 Flatten the colors of an image to a variable amount of colors.
 
-![alt text](https://i.imgur.com/PHLHp5m.png "Nodes Preview")<br>
+![alt text](https://i.imgur.com/BO6fMa6.png "Nodes Preview")<br>
 
 
 ## Citations
