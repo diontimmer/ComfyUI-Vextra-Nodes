@@ -36,9 +36,9 @@ Generate various noises to use in masks or blending.
 ### Flatten Colors
 Flatten the colors of an image to a variable amount of colors.
 
-
+![alt text](https://i.imgur.com/PHLHp5m.png "Nodes Preview")<br>
 
 
 ## Citations
-Pixel Sort by: [satyarth](https://github.com/satyarth)
+Pixel Sort by: [satyarth](https://github.com/satyarth)<br>
 Blend Modes by: [flrs](https://github.com/flrs/)
