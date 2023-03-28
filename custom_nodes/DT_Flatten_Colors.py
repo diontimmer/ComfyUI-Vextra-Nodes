@@ -1,20 +1,7 @@
 import torch
 import numpy as np
 from PIL import Image
-
-COLOR_MODES = {
-    'RGB': 'RGB',
-    'RGBA': 'RGBA',
-    'luminance': 'L',
-    'luminance_alpha': 'LA',
-    'cmyk': 'CMYK',
-    'ycbcr': 'YCbCr',
-    'lab': 'LAB',
-    'hsv': 'HSV',
-    'single_channel': '1',
-}
-
-class Swap_Color_Mode():
+class Flatten_Colors():
     """
     This node provides a simple interface to apply PixelSort blur to the output image.
     """
@@ -30,12 +17,12 @@ class Swap_Color_Mode():
             "required": {
                 "images": ("IMAGE",),},
             "optional": {
-                "color_mode": (['default', 'luminance', 'single_channel'],),
+                "number_of_colors": ("INT", {"default": 5, "min": 1, "max": 4000, "step": 1}),
                 },
             }
 
     RETURN_TYPES = ("IMAGE",)
-    FUNCTION = "do_swap"
+    FUNCTION = "flatten"
 
     CATEGORY = "VextraNodes"
 
@@ -45,13 +32,13 @@ class Swap_Color_Mode():
             img = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
         return img
 
-    def do_swap(self, images, color_mode='default'):
+    def flatten(self, images, number_of_colors):
+        #create empty tensor with the same shape as images
         total_images = []
         for image in images:
             image = self.tensor_to_pil(image)
-            if color_mode != 'default':
-                correct_color_mode = COLOR_MODES[color_mode]
-                image = image.convert(correct_color_mode)
+            image = image.convert('P', palette=Image.ADAPTIVE, colors=number_of_colors)
+            
             # convert to tensor
             out_image = np.array(image.convert("RGB")).astype(np.float32) / 255.0
             out_image = torch.from_numpy(out_image).unsqueeze(0)
@@ -61,6 +48,7 @@ class Swap_Color_Mode():
         total_images = torch.cat(total_images, 0)
         return (total_images,)
 
+
 NODE_CLASS_MAPPINGS = {
-    "Swap Color Mode": Swap_Color_Mode
+    "Flatten Colors": Flatten_Colors
 }
