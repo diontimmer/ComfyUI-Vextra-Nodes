@@ -20,8 +20,9 @@ class SolidColorImage():
             "required": {
                 "width": ("INT", {"default": 512, "min": 64, "max": 10000, "step": 64}),
                 "height": ("INT", {"default": 512, "min": 64, "max": 10000, "step": 64}),
-                "color": ("STRING", {"default": 'rgb(255, 255, 255)'}),
+                "color": ("STRING", {"default": 'rgba(255, 255, 255, 255)'}),
                 "batch_size": ("INT", {"default": 1, "min": 1, "max": 64, "step": 1}),
+                "color_mode": (["RGBA", "RGB"],),
                 },
             "optional": {
                 },
@@ -38,17 +39,17 @@ class SolidColorImage():
             img = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
         return img
 
-    def do_solid(self, width, height, color, batch_size):
+    def do_solid(self, width, height, color, batch_size, color_mode):
         #create empty tensor with the same shape as images
         total_images = []
         if color.startswith('#'):
-            color_rgb = tuple(int(color.lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
+            color_rgba = tuple(int(color.lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
         else:
-            color_rgb = tuple(map(int, color.strip('rgb()').split(',')))
+            color_rgba = tuple(map(int, color.strip('rgba()').split(',')))
         for i in range(batch_size):
-            image = Image.new('RGB', (width, height), color_rgb) 
+            image = Image.new('RGBA', (width, height), color_rgba) 
             # convert to tensor
-            out_image = np.array(image.convert("RGB")).astype(np.float32) / 255.0
+            out_image = np.array(image.convert(color_mode)).astype(np.float32) / 255.0
             out_image = torch.from_numpy(out_image).unsqueeze(0)
             total_images.append(out_image)
 
