@@ -30,7 +30,7 @@ class Swap_Color_Mode():
             "required": {
                 "images": ("IMAGE",),},
             "optional": {
-                "color_mode": (['default', 'luminance', 'single_channel'],),
+                "color_mode": (['default', 'luminance', 'single_channel', 'RGB', 'RGBA', 'lab', 'hsv', 'cmyk', 'ycbcr'],),
                 },
             }
 
@@ -53,7 +53,7 @@ class Swap_Color_Mode():
                 correct_color_mode = COLOR_MODES[color_mode]
                 image = image.convert(correct_color_mode)
             # convert to tensor
-            out_image = np.array(image.convert("RGB")).astype(np.float32) / 255.0
+            out_image = np.array(image).astype(np.float32) / 255.0
             out_image = torch.from_numpy(out_image).unsqueeze(0)
             total_images.append(out_image)
 

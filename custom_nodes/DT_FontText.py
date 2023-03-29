@@ -25,9 +25,10 @@ class FontText():
                 "x": ("INT", {"default": 50, "min": 2, "max": 10000, "step": 1}),
                 "y": ("INT", {"default": 50, "min": 2, "max": 10000, "step": 1}),
                 "text": ("STRING", {"default": "Hello World"}),
-                "color": ("STRING", {"default": 'rgb(255, 255, 255)'}),
+                "color": ("STRING", {"default": 'rgba(255, 255, 255, 255)'}),
                 "anchor": (["Bottom Left Corner", "Center"],),
                 "rotate": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 360.0, "step": 0.1}),
+                "color_mode": (["RGB", "RGBA"],),
                 },
             }
 
@@ -42,18 +43,18 @@ class FontText():
             img = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
         return img
 
-    def do_font(self, images, font_ttf, size, x, y, text, color, anchor, rotate):
+    def do_font(self, images, font_ttf, size, x, y, text, color, anchor, rotate, color_mode):
         #create empty tensor with the same shape as images
         total_images = []
         center_anchor = True if anchor == 'Center' else False
         if color.startswith('#'):
-            color_rgb = tuple(int(color.lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
+            color_rgba = tuple(int(color.lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
         else:
-            color_rgb = tuple(map(int, color.strip('rgb()').split(',')))
+            color_rgba = tuple(map(int, color.strip('rgba()').split(',')))
         for image in images:
             image = self.tensor_to_pil(image)
             
-            add_text_to_image(image, font_ttf, size, x, y, text, color_rgb, center_anchor, rotate)
+            add_text_to_image(image, font_ttf, size, x, y, text, color_rgba, center_anchor, rotate)
 
 
 
@@ -61,7 +62,7 @@ class FontText():
 
 
             # convert to tensor
-            out_image = np.array(image.convert("RGB")).astype(np.float32) / 255.0
+            out_image = np.array(image.convert(color_mode)).astype(np.float32) / 255.0
             out_image = torch.from_numpy(out_image).unsqueeze(0)
             total_images.append(out_image)
 
