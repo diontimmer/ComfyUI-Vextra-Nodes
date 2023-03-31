@@ -13,22 +13,22 @@ Pixel sorting effect by [satyarth](https://github.com/satyarth/pixelsort). Will 
 Read about pixel sorting [here](http://satyarth.me/articles/pixel-sorting/).
 
 ### Swap Color Mode (Black & White)
-Swap the color mode to luminescence or single channel, useful for making mask or simply making stuff black & white.
+Swap the color mode to luminescence or single channel, useful for making mask or simply making stuff black & white. Also useful when changing rgb modes.
 
 ### Solid Color
 Generates an empty solid color image with options for color, size and batch size.
 
-### Chromatic Aberration
-Chromatic Abarration adds a color shift to the image. Useful for making the image look more "analog".
+### Glitch This
+Add the Glitch This! effect.
 
 ### Add Text To Image
 Supply the path to a .ttf file and add text to an image input. Has options for achor placement, rotation, color and more.
 
-### Blending
-Blending node that supports various blending modes. Uses [blend-modes](https://github.com/flrs/blend_modes) under the hood. Will install the module upon installation.
+### Play Sound
+Play sound during execution.
 
-### Displacement
-Displacement node that can distort an image using a supplied mask.
+### Prettify Prompt (PromptGen)
+Prettify prompt using gpt2 AI model.
 
 ### Generate Noise
 Generate various noises to use in masks or blending.
@@ -41,4 +41,3 @@ Flatten the colors of an image to a variable amount of colors.
 
 ## Citations
 Pixel Sort by: [satyarth](https://github.com/satyarth)<br>
-Blend Modes by: [flrs](https://github.com/flrs/)
