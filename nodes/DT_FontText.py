@@ -24,7 +24,7 @@ class FontText():
                 "size": ("INT", {"default": 50, "min": 2, "max": 1000, "step": 1}),
                 "x": ("INT", {"default": 50, "min": 2, "max": 10000, "step": 1}),
                 "y": ("INT", {"default": 50, "min": 2, "max": 10000, "step": 1}),
-                "text": ("STRING", {"default": "Hello World"}),
+                "text": ("STRING", {"default": "Hello World", "multiline": True}),
                 "color": ("STRING", {"default": 'rgba(255, 255, 255, 255)'}),
                 "anchor": (["Bottom Left Corner", "Center"],),
                 "rotate": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 360.0, "step": 0.1}),
@@ -43,7 +43,7 @@ class FontText():
             img = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
         return img
 
-    def do_font(self, images, font_ttf, size, x, y, text, color, anchor, rotate, color_mode):
+    def do_font(self, images, font_ttf, size, x, y, color, anchor, rotate, color_mode, text):
         #create empty tensor with the same shape as images
         total_images = []
         center_anchor = True if anchor == 'Center' else False
