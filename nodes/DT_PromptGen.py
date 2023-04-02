@@ -7,7 +7,7 @@ comfy_path = script_path.split('custom_nodes')[0]
 
 if not os.path.exists(f'{comfy_path}custom_nodes/VextraNodes/binary/distilgpt2-stable-diffusion-v2'):
     print('Downloading model...')
-    os.system(f'git clone https://huggingface.co/FredZhang7/distilgpt2-stable-diffusion-v2 {comfy_path}custom_nodes/VextraNodes/binary/distilgpt2-stable-diffusion-v2')
+    os.system(f'git clone https://huggingface.co/FredZhang7/distilgpt2-stable-diffusion-v2 {comfy_path}custom_nodes/ComfyUI-Vextra-Nodes/binary/distilgpt2-stable-diffusion-v2')
 
 tokenizer = GPT2Tokenizer.from_pretrained('distilgpt2')
 tokenizer.add_special_tokens({'pad_token': '[PAD]'})
