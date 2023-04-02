@@ -3,8 +3,8 @@
 
 ## Installation
 1. Install [ComfyUI](https://github.com/comfyanonymous/ComfyUI)
-2. Download nodes and place them in custom_nodes folder inside your ComfyUI installation.
-3. Start/Restart ComfyUI
+2. git clone in the ```custom_nodes``` folder inside your ComfyUI installation or download as zip and unzip the contents to ```custom_nodes/ComfyUI-Vextra-Nodes```.
+3. Start/restart ComfyUI
 
 ## Nodes
 
