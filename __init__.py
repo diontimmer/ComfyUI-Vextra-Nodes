@@ -3,7 +3,7 @@ import importlib
 
 NODE_CLASS_MAPPINGS = {}
 
-for node in os.listdir(os.path.dirname(__file__) + '\\nodes'):
+for node in os.listdir(os.path.dirname(__file__) + os.sep + 'nodes'):
     if node.startswith('DT_'):
         node = node.split('.')[0]
         node_import = importlib.import_module('custom_nodes.ComfyUI-Vextra-Nodes.nodes.' + node)
