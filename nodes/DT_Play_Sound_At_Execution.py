@@ -44,6 +44,9 @@ class Play_Sound_RealTime():
 
     def do_sound(self, images, path, volume):
         PlaySound(path, volume)
+        return {
+            "result": (images, ),
+        }
 
 NODE_CLASS_MAPPINGS = {
     "Play Sound At Execution": Play_Sound_RealTime
