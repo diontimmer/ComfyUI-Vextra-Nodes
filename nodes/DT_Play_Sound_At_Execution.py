@@ -39,6 +39,8 @@ class Play_Sound_RealTime():
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "do_sound"
+    
+    OUTPUT_NODE = True
 
     CATEGORY = "VextraNodes"
 
