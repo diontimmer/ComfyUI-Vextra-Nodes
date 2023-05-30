@@ -39,11 +39,16 @@ class Play_Sound_RealTime():
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "do_sound"
+    
+    OUTPUT_NODE = True
 
     CATEGORY = "VextraNodes"
 
     def do_sound(self, images, path, volume):
         PlaySound(path, volume)
+        return {
+            "result": (images, ),
+        }
 
 NODE_CLASS_MAPPINGS = {
     "Play Sound At Execution": Play_Sound_RealTime
