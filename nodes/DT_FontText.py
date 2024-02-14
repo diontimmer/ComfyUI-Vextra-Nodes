@@ -1,26 +1,40 @@
 import torch
 import numpy as np
-from PIL import Image
-from PIL import ImageDraw
-from PIL import ImageFont
+import platform
+from PIL import Image, ImageDraw, ImageFont
 
 class FontText():
     """
-    This node provides a simple interface to apply PixelSort blur to the output image.
+    This node provides a simple interface to add text to the output image.
     """
     def __init__(self):
-        pass
-    
+        # Added code by Aegis72 to autosense OS and supply a proper default font for Mac and Linux users 
+        # Detect the operating system
+        self.os_name = platform.system()
+        
+        # Set default font path based on the operating system
+        if self.os_name == 'Windows':
+            self.default_font_path = 'C:/Windows/Fonts/arial.ttf'
+        elif self.os_name == 'Darwin':  # macOS
+            self.default_font_path = '/System/Library/Fonts/SFNS.ttf'  # San Francisco is the default font for macOS
+        elif self.os_name == 'Linux':
+            self.default_font_path = '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'  # Common path for a default font in Linux
+        else:
+            self.default_font_path = ''  # Fallback path if OS is not recognized
+
     @classmethod
     def INPUT_TYPES(cls):
         """
         Input Types
         """
+        # Use the instance's default font path
+        default_font_path = cls().default_font_path
         return {
             "required": {
                 "images": ("IMAGE",),},
             "optional": {
-                "font_ttf": ("STRING", {"default": 'C:/Windows/Fonts/arial.ttf'}),
+                "font_ttf": ("STRING", {"default": default_font_path}),
+                # The rest of the parameters remain unchanged
                 "size": ("INT", {"default": 50, "min": 2, "max": 1000, "step": 1}),
                 "x": ("INT", {"default": 50, "min": 2, "max": 10000, "step": 1}),
                 "y": ("INT", {"default": 50, "min": 2, "max": 10000, "step": 1}),
@@ -55,11 +69,6 @@ class FontText():
             image = self.tensor_to_pil(image)
             
             add_text_to_image(image, font_ttf, size, x, y, text, color_rgba, center_anchor, rotate)
-
-
-
-
-
 
             # convert to tensor
             out_image = np.array(image.convert(color_mode)).astype(np.float32) / 255.0
